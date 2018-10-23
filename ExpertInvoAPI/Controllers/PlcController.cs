@@ -43,5 +43,34 @@ namespace ExpertInvoAPI.Controllers
         }
 
         [BindProperty]
+        public PlcTb Entry { get; set; }
+
+        //to delete
+        public ActionResult OnGetDelete(int? id)
+        {
+            if (id != null)
+            {
+                var data = (from entry in _Context.PlcKey
+                            where entry.ID = id
+                            select entry).SingleOrDefault();
+                _Context.Remove(data);
+                _Context.SaveChanges();
+            }
+            return RedirectToPage("insertpagehere");
+        }
+
+        public ActionResult OnPost()
+        {
+            var entry = Entry;
+            if(!ModelState.IsValid)
+            {
+                return RedirectToPage("insertpagehere"); 
+            }
+            entry.ID = 0;
+            var result = _Context.Add(entry);
+            _Context.SaveChanges(); //Saves entries
+
+            return RedirectToPage("insertpagehere");
+        }
     }
 }
