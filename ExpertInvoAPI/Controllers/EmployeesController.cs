@@ -67,7 +67,7 @@ namespace ExpertInvoAPI.Controllers
             var employee = Employee;
             if (!ModelState.IsValid)
             {
-                return Acti; // return page
+                //return Acti; // return page
 
             }
 
