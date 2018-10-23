@@ -35,7 +35,7 @@ namespace ExpertInvoAPI.Controllers
         {
             if (Employee == null)
             {
-                return "You didn't select an entries";
+                return "You didn't select an entry";
             }
             else
             {
