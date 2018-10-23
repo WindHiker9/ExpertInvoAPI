@@ -17,7 +17,7 @@ namespace ExpertInvoAPI.Models
         public int Register { get; set; }
         [Required(ErrorMessage = "PLC Value is not found!!")]
         public int Value { get; set; }
-        [Required(ErrorMessage = "Birth Date is not found!!")]
+        [Required(ErrorMessage = "Time Written is not found!!")]
         public DateTime TimeWritten { get; set; }
 
     }
