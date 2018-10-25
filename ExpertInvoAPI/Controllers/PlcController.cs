@@ -62,7 +62,7 @@ namespace ExpertInvoAPI.Controllers
             return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
         }
         [HttpPost]
-        [Route("api/plcController/post")]
+        [Route("api/plcController/post")] //added route
         public ActionResult OnPost()
         {
             var entry = Entry;
