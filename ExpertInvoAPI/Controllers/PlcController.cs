@@ -24,7 +24,7 @@ namespace ExpertInvoAPI.Controllers
         public void OnGet()
         {
             var data = (from plcTbsList in _Context.PlcKey
-                        select plcTbsList).toList();
+                        select plcTbsList).ToList();
 
             plcTbsList = data;
         }
@@ -46,13 +46,13 @@ namespace ExpertInvoAPI.Controllers
         public PlcTb Entry { get; set; }
 
         //to delete
-        public ActionResult OnGetDelete(int? id)
+        public ActionResult OnGetDelete(int id)
         {
             if (id != null)
             {
-                var data = (from entry in _Context.PlcKey
-                            where entry.ID = id
-                            select entry).SingleOrDefault();
+                var data = (from Entry in _Context.PlcKey
+                            where Entry.Id ==id
+                            select Entry).SingleOrDefault();
                 _Context.Remove(data);
                 _Context.SaveChanges();
             }
@@ -66,7 +66,7 @@ namespace ExpertInvoAPI.Controllers
             {
                 return RedirectToPage("insertpagehere"); 
             }
-            entry.ID = 0;
+            entry.Id = 0;
             var result = _Context.Add(entry);
             _Context.SaveChanges(); //Saves entries
 
