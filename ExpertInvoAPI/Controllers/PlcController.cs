@@ -20,13 +20,13 @@ namespace ExpertInvoAPI.Controllers
             _Context = databasecontext; //abstracts dbcontext into _context
         }
 
-        public List<PlcTb> plcTbsList { get; set; }
+        public List<PlcTb> PlcList { get; set; }
         public void OnGet()
         {
-            var data = (from plcTbsList in _Context.PlcKey
-                        select plcTbsList).ToList(); //specifies what to grab
+            var data = (from plclist in _Context.PlcKey
+                        select plclist).ToList(); //specifies what to grab
 
-            plcTbsList = data; //grabs data
+            PlcList = data; //grabs data
         }
 
         [HttpGet]
@@ -39,7 +39,7 @@ namespace ExpertInvoAPI.Controllers
             }
             else
             {
-                return "You selected " + string.Join(", ", Entry.Select(p => p.Register));
+                return "You selected " + string.Join(", ", Entry.Select(p => p.IP_Address));
             }
         }
 
@@ -49,13 +49,13 @@ namespace ExpertInvoAPI.Controllers
         //to delete
         [HttpDelete]
         [Route("api/plcController/delete")]
-        public ActionResult OnGetDelete(int id)
+        public ActionResult OnGetDelete(int? id)
         {
-            if (id != null) //always evaluates to true in warnings??
+            if (id != null) //always evaluates to true in warnings?? //fixed with ? before id two lines above
             {
-                var data = (from Entry in _Context.PlcKey
-                            where Entry.Id ==id
-                            select Entry).SingleOrDefault();
+                var data = (from entry in _Context.PlcKey
+                            where entry.Id ==id
+                            select entry).SingleOrDefault();
                 _Context.Remove(data); //deletes from db
                 _Context.SaveChanges(); //saves changes to db
             }

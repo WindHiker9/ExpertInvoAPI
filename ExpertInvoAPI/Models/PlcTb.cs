@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-//Since this page is for a table, this page is probs not necessary for just an API
+
+//Since this page is for a table, this page is likely not necessary for an API
+
 namespace ExpertInvoAPI.Models
 {
     [Table("PLCDataTest")]
