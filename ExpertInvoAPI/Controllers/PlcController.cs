@@ -20,7 +20,7 @@ namespace ExpertInvoAPI.Controllers
             _Context = databasecontext; //abstracts dbcontext into _context
         }
 
-        public List<PlcTb> PlcList { get; set; }
+        public List<PlcKey> PlcList { get; set; }
         public void OnGet()
         {
             var data = (from plclist in _Context.PlcKey
@@ -31,7 +31,7 @@ namespace ExpertInvoAPI.Controllers
 
         [HttpGet]
         [Route("api/plcController/get")]
-        public String Indexhome(IEnumerable<PlcTb> Entry)
+        public String Indexhome(IEnumerable<PlcKey> Entry)
         {
             if (Entry == null)
             {
@@ -44,7 +44,7 @@ namespace ExpertInvoAPI.Controllers
         }
 
         [BindProperty]
-        public PlcTb Entry { get; set; }
+        public PlcKey Entry { get; set; }
 
         //to delete
         [HttpDelete]

@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpertInvoAPI.Controllers
 {
     [Authorize]
-    [Route("api/employeeController")]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -20,7 +21,7 @@ namespace ExpertInvoAPI.Controllers
             _Context = databasecontext;
         }
 
-        public List<EmployeeTb> EmployeeList { get; set; }
+        public List<EmployeeKey> EmployeeList { get; set; }
 
         public void OnGet()
         {
@@ -32,7 +33,7 @@ namespace ExpertInvoAPI.Controllers
 
         [HttpGet]
         [Route("api/employeeController/get")]
-        public String Indexhome(IEnumerable<EmployeeTb> Entry)
+        public String Indexhome(IEnumerable<EmployeeKey> Entry)
         {
             if (Entry == null)
             {
@@ -45,7 +46,7 @@ namespace ExpertInvoAPI.Controllers
         }
 
         [BindProperty]
-        public EmployeeTb Entry { get; set; }
+        public EmployeeKey Entry { get; set; }
 
         //to delete
         [HttpDelete]
