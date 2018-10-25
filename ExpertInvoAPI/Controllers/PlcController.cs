@@ -17,16 +17,16 @@ namespace ExpertInvoAPI.Controllers
         ApplicationDbContext _Context;
         public PlcController(ApplicationDbContext databasecontext)
         {
-            _Context = databasecontext;
+            _Context = databasecontext; //abstracts dbcontext into _context
         }
 
         public List<PlcTb> plcTbsList { get; set; }
         public void OnGet()
         {
             var data = (from plcTbsList in _Context.PlcKey
-                        select plcTbsList).ToList();
+                        select plcTbsList).ToList(); //specifies what to grab
 
-            plcTbsList = data;
+            plcTbsList = data; //grabs data
         }
 
         [HttpPost]
@@ -48,29 +48,29 @@ namespace ExpertInvoAPI.Controllers
         //to delete
         public ActionResult OnGetDelete(int id)
         {
-            if (id != null)
+            if (id != null) //always evaluates to true in warnings??
             {
                 var data = (from Entry in _Context.PlcKey
                             where Entry.Id ==id
                             select Entry).SingleOrDefault();
-                _Context.Remove(data);
-                _Context.SaveChanges();
+                _Context.Remove(data); //deletes from db
+                _Context.SaveChanges(); //saves changes to db
             }
-            return RedirectToPage("insertpagehere");
+            return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
         }
 
         public ActionResult OnPost()
         {
             var entry = Entry;
-            if(!ModelState.IsValid)
+            if(!ModelState.IsValid) //checks model state
             {
-                return RedirectToPage("insertpagehere"); 
+                return RedirectToPage("insertpagehere");  //no page to redirect to at the moment
             }
             entry.Id = 0;
             var result = _Context.Add(entry);
             _Context.SaveChanges(); //Saves entries
 
-            return RedirectToPage("insertpagehere");
+            return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
         }
     }
 }
