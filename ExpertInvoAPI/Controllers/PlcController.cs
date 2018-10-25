@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpertInvoAPI.Controllers
 {
 	[Authorize]
-    [Route("api/[controller]")]
+    [Route("api/plcController")]
     [ApiController]
     public class PlcController: ControllerBase
     {
@@ -29,7 +29,8 @@ namespace ExpertInvoAPI.Controllers
             plcTbsList = data; //grabs data
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Route("api/plcController/get")]
         public String Indexhome(IEnumerable<PlcTb> Entry)
         {
             if (Entry == null)
@@ -46,6 +47,8 @@ namespace ExpertInvoAPI.Controllers
         public PlcTb Entry { get; set; }
 
         //to delete
+        [HttpDelete]
+        [Route("api/plcController/delete")]
         public ActionResult OnGetDelete(int id)
         {
             if (id != null) //always evaluates to true in warnings??
@@ -58,7 +61,8 @@ namespace ExpertInvoAPI.Controllers
             }
             return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
         }
-
+        [HttpPost]
+        [Route("api/plcController/post")]
         public ActionResult OnPost()
         {
             var entry = Entry;
