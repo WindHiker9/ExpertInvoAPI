@@ -12,7 +12,7 @@ namespace ExpertInvoAPI.Models
     [Table("tblEmployee")]
     public class EmployeeTb
     {
-        public int ID { get; set; }
+        public int EmployeeID { get; set; }
         [Required (ErrorMessage = "First Name is not found!!")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Last Name is not found!!")]

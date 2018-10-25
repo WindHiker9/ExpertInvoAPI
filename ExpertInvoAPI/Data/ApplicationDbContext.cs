@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ExpertInvoAPI.Models;
-//I'm not sure if this page is necessary either
+
 namespace ExpertInvoAPI.Data
 {
     public class ApplicationDbContext : IdentityDbContext

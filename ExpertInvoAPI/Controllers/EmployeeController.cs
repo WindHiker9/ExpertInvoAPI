@@ -55,7 +55,7 @@ namespace ExpertInvoAPI.Controllers
             if (id != null)
             {
                 var data = (from entry in _Context.EmployeeKey
-                            where entry.ID == id
+                            where entry.EmployeeID == id
                             select entry).SingleOrDefault();
 
                 _Context.Remove(data);
@@ -74,7 +74,7 @@ namespace ExpertInvoAPI.Controllers
                 return RedirectToPage("insertpagehere");  //no page to redirect to at the moment
             }
 
-            entry.ID = 0;
+            entry.EmployeeID = 0;
             var result = _Context.Add(entry);
             //The following "_Context.Entry(entry)" lines may be capable of updating; testing required
             //_Context.Entry(entry).Property(x => x.FirstName).IsModified = true;

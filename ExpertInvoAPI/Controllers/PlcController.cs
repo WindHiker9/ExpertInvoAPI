@@ -51,7 +51,7 @@ namespace ExpertInvoAPI.Controllers
         [Route("api/plcController/delete")]
         public ActionResult OnGetDelete(int? id)
         {
-            if (id != null) //always evaluates to true in warnings?? //fixed with ? before id two lines above
+            if (id != null)
             {
                 var data = (from entry in _Context.PlcKey
                             where entry.Id ==id
