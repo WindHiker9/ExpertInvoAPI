@@ -6,91 +6,112 @@ using ExpertInvoAPI.Data;
 using ExpertInvoAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace ExpertInvoAPI.Controllers
 {
     [Authorize]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/Employee")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        ApplicationDbContext _Context;
+        private readonly ApplicationDbContext _context;
         public EmployeeController(ApplicationDbContext databasecontext)
         {
-            _Context = databasecontext;
+            _context = databasecontext;
         }
 
-        public List<EmployeeKey> EmployeeList { get; set; }
-
-        public void OnGet()
-        {
-            var data = (from employeelist in _Context.EmployeeKey
-                        select employeelist).ToList();
-
-            EmployeeList = data;
-        }
-
+        // GET: api/Employee
         [HttpGet]
-        [Route("api/employeeController/get")]
-        public String Indexhome(IEnumerable<EmployeeKey> Entry)
+        [Route("api/Employee")]
+        public IEnumerable<EmployeeModel> GetEmployees()
         {
-            if (Entry == null)
-            {
-                return "No entry selected";
-            }
-            else
-            {
-                return "You selected " + string.Join(", ", Entry.Select(s => s.FirstName));
-            }
+                return _context.EmployeeModel;
         }
 
-        [BindProperty]
-        public EmployeeKey Entry { get; set; }
-
-        //to delete
-        [HttpDelete]
-        [Route("api/plcController/delete")]
-        public ActionResult OnGetDelete(int? id)
+        // GET: api/Employee/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEmployees([FromRoute] int id)
         {
-            if (id != null)
-            {
-                var data = (from entry in _Context.EmployeeKey
-                            where entry.EmployeeID == id
-                            select entry).SingleOrDefault();
-
-                _Context.Remove(data);
-                _Context.SaveChanges();
-            }
-            return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
-        }
-
-        [HttpPost]
-        [Route("api/plcController/post")] //added route
-        public ActionResult OnPost()
-        {
-            var entry = Entry;
             if (!ModelState.IsValid)
             {
-                return RedirectToPage("insertpagehere");  //no page to redirect to at the moment
+                return BadRequest(ModelState);
             }
+            var employee = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.EmployeeID == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return Ok(employee);
+        }
 
-            entry.EmployeeID = 0;
-            var result = _Context.Add(entry);
-            //The following "_Context.Entry(entry)" lines may be capable of updating; testing required
-            //_Context.Entry(entry).Property(x => x.FirstName).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.LastName).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.Address).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.Age).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.Birthdate).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.PersonalEmail).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.PrimaryPhone).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.SecondaryPhone).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.EmergencyContact).IsModified = true;
-            //_Context.Entry(entry).Property(x => x.EmergencyContactNumber).IsModified = true;
-            _Context.SaveChanges(); // Saving Data in database 
+        // PUT: api/Employee/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEmployee([FromRoute] int id, [FromBody] EmployeeModel employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id != employee.EmployeeID)
+            {
+                return BadRequest();
+            }
+            _context.Entry(employee).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
 
-            return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
+        private bool EmployeeExists(int id)
+        {
+            return _context.EmployeeModel.Any(e => e.EmployeeID == id);
+        }
+
+        // DELETE: api/Employee/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEmployee([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var employee = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.EmployeeID == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            _context.EmployeeModel.Remove(employee);
+            await _context.SaveChangesAsync();
+            return Ok(employee);
+        }
+
+        // POST: api/Employee
+        [HttpPost]
+        public async Task<IActionResult> PostEmployee([FromBody] EmployeeModel employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _context.EmployeeModel.Add(employee);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeID }, employee);
         }
     }
 }

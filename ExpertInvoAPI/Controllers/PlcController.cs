@@ -20,10 +20,10 @@ namespace ExpertInvoAPI.Controllers
             _Context = databasecontext; //abstracts dbcontext into _context
         }
 
-        public List<PlcKey> PlcList { get; set; }
+        public List<PlcModel> PlcList { get; set; }
         public void OnGet()
         {
-            var data = (from plclist in _Context.PlcKey
+            var data = (from plclist in _Context.PlcModel
                         select plclist).ToList(); //specifies what to grab
 
             PlcList = data; //grabs data
@@ -31,7 +31,7 @@ namespace ExpertInvoAPI.Controllers
 
         [HttpGet]
         [Route("api/plcController/get")]
-        public String Indexhome(IEnumerable<PlcKey> Entry)
+        public String Indexhome(IEnumerable<PlcModel> Entry)
         {
             if (Entry == null)
             {
@@ -44,7 +44,7 @@ namespace ExpertInvoAPI.Controllers
         }
 
         [BindProperty]
-        public PlcKey Entry { get; set; }
+        public PlcModel Entry { get; set; }
 
         //to delete
         [HttpDelete]
@@ -53,7 +53,7 @@ namespace ExpertInvoAPI.Controllers
         {
             if (id != null)
             {
-                var data = (from entry in _Context.PlcKey
+                var data = (from entry in _Context.PlcModel
                             where entry.Id ==id
                             select entry).SingleOrDefault();
                 _Context.Remove(data); //deletes from db
@@ -61,6 +61,7 @@ namespace ExpertInvoAPI.Controllers
             }
             return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
         }
+
         [HttpPost]
         [Route("api/plcController/post")] //added route
         public ActionResult OnPost()

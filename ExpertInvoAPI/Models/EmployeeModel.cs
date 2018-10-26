@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ExpertInvoAPI.Models
 {
-    public class EmployeeKey
+    public class EmployeeModel
     {
         public int EmployeeID { get; set; }
         public string FirstName { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ExpertInvoAPI.Models
 {
-    public class PlcKey
+    public class PlcModel
     {
         public int Id { get; set; }
         public string IP_Address { get; set; }
