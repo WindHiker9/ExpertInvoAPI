@@ -34,8 +34,12 @@ namespace ExpertInvoAPI
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //Sometimes "DefaultConnection" doesn't correctly reference
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("Server=expterinvoserver.database.windows.net;Database=ExpertInvoDatabase; Persist Security Info=False;User ID=ExpertInvo;Password=ExpertInv0;TrustServerCertificate=False;")));
 
             services.AddCors(options =>
             {

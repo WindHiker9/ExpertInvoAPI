@@ -13,11 +13,10 @@ namespace ExpertInvoAPI.Data
     {
         public ApplicationDbContext (DbContextOptions <ApplicationDbContext> options) : base(options)
         {
-            
         }
-        public ApplicationDbContext() { }
+        //public ApplicationDbContext() { }
 
-        public DbSet<EmployeeModel> EmployeeModel { get; set; }
-        public DbSet<PlcModel> PlcModel { get; set; }
+        public DbSet<EmployeeTb> EmployeeModel { get; set; }
+        public DbSet<PlcModel> PlcTb { get; set; }
     }
 }

@@ -6,13 +6,15 @@ using ExpertInvoAPI.Data;
 using ExpertInvoAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpertInvoAPI.Controllers
 {
-	[Authorize]
+    [Authorize]
+    [Produces("application/json")]
     [Route("api/plcController")]
     [ApiController]
-    public class PlcController: ControllerBase
+    public class PlcController : ControllerBase
     {
         ApplicationDbContext _Context;
         public PlcController(ApplicationDbContext databasecontext)
@@ -20,58 +22,99 @@ namespace ExpertInvoAPI.Controllers
             _Context = databasecontext; //abstracts dbcontext into _context
         }
 
-        public List<PlcModel> PlcList { get; set; }
-        public void OnGet()
+        [HttpGet]
+        [Route("api/plcController")]
+        public IEnumerable<PlcModel> GetEntries()
         {
-            var data = (from plclist in _Context.PlcModel
-                        select plclist).ToList(); //specifies what to grab
-
-            PlcList = data; //grabs data
+            return _Context.PlcTb;
         }
 
-        [HttpGet]
-        [Route("api/plcController/get")]
-        public String Indexhome(IEnumerable<PlcModel> Entry)
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEntries([FromRoute] int id)
         {
-            if (Entry == null)
+            if (!ModelState.IsValid)
             {
-                return "No entry selected";
+                return BadRequest(ModelState);
             }
-            else
+            var entry = await _Context.PlcTb.SingleOrDefaultAsync(m => m.Id == id);
+            if (entry == null)
             {
-                return "You selected " + string.Join(", ", Entry.Select(p => p.IP_Address));
+                return NotFound();
             }
+            return Ok(entry);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEntry([FromRoute] int id, [FromBody] PlcModel entry)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id != entry.Id)
+            {
+                return BadRequest();
+            }
+            _Context.Entry(entry).State = EntityState.Modified;
+            try
+            {
+                await _Context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EntryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+        private bool EntryExists(int id)
+        {
+            return _Context.PlcTb.Any(e => e.Id == id);
         }
 
         [BindProperty]
         public PlcModel Entry { get; set; }
 
-        //to delete
-        [HttpDelete]
-        [Route("api/plcController/delete")]
-        public ActionResult OnGetDelete(int? id)
+        //to delete /api/Plc/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEntry([FromRoute] int id)
         {
-            if (id != null)
+            if (!ModelState.IsValid)
             {
-                var data = (from entry in _Context.PlcModel
-                            where entry.Id ==id
-                            select entry).SingleOrDefault();
-                _Context.Remove(data); //deletes from db
-                _Context.SaveChanges(); //saves changes to db
+                return BadRequest(ModelState);
             }
-            return RedirectToPage("insertpagehere"); //no page to redirect to at the moment
+
+            var data = await _Context.PlcTb.SingleOrDefaultAsync(m => m.Id == id);
+            if (Entry == null)
+            {
+                return NotFound();
+            }
+            _Context.Remove(data); //deletes from db
+            await _Context.SaveChangesAsync(); //saves changes to db
+
+            return Ok(Entry); //no page to redirect to at the moment
         }
 
         [HttpPost]
         [Route("api/plcController/post")] //added route
-        public ActionResult OnPost()
+        public IActionResult PostEntry([FromBody] PlcModel entry)
+        //old version which tries to sync
+        //public async Task<IActionResult> PostEntry([FromBody] PlcModel entry) 
+
         {
-            var entry = Entry;
-            if(!ModelState.IsValid) //checks model state
+            if (!ModelState.IsValid) //checks model state
             {
-                return RedirectToPage("insertpagehere");  //no page to redirect to at the moment
+                return BadRequest(ModelState);  //no page to redirect to at the moment
             }
-            entry.Id = 0;
+            _Context.PlcTb.Add(entry);
             var result = _Context.Add(entry);
             _Context.SaveChanges(); //Saves entries
 

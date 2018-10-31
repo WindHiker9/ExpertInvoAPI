@@ -26,7 +26,7 @@ namespace ExpertInvoAPI.Controllers
         // GET: api/Employee
         [HttpGet]
         [Route("api/Employee")]
-        public IEnumerable<EmployeeModel> GetEmployees()
+        public IEnumerable<EmployeeTb> GetEmployees()
         {
                 return _context.EmployeeModel;
         }
@@ -103,7 +103,7 @@ namespace ExpertInvoAPI.Controllers
 
         // POST: api/Employee
         [HttpPost]
-        public async Task<IActionResult> PostEmployee([FromBody] EmployeeModel employee)
+        public async Task<IActionResult> PostEmployee([FromBody] EmployeeTb employee)
         {
             if (!ModelState.IsValid)
             {
