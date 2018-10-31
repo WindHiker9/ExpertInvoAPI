@@ -1,0 +1,15 @@
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\bin\Debug\netcoreapp2.1\ExpertInvoAPI.deps.json
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\bin\Debug\netcoreapp2.1\ExpertInvoAPI.runtimeconfig.json
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\bin\Debug\netcoreapp2.1\ExpertInvoAPI.runtimeconfig.dev.json
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\bin\Debug\netcoreapp2.1\ExpertInvoAPI.dll
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\bin\Debug\netcoreapp2.1\ExpertInvoAPI.pdb
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.csprojAssemblyReference.cache
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.csproj.CoreCompileInputs.cache
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.RazorAssemblyInfo.cache
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.RazorAssemblyInfo.cs
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.AssemblyInfoInputs.cache
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.AssemblyInfo.cs
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.RazorTargetAssemblyInfo.cache
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.dll
+C:\Users\irk\source\repos\ExpertInvoAPI\ExpertInvoAPI\obj\Debug\netcoreapp2.1\ExpertInvoAPI.pdb
