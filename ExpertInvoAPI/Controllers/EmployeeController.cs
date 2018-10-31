@@ -28,7 +28,7 @@ namespace ExpertInvoAPI.Controllers
         [Route("api/Employee")]
         public IEnumerable<EmployeeModel> GetEmployees()
         {
-                return _context.EmployeeModel;
+                return _context.EmployeeTb;
         }
 
         // GET: api/Employee/5
@@ -39,7 +39,7 @@ namespace ExpertInvoAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var employee = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.EmployeeID == id);
+            var employee = await _context.EmployeeTb.SingleOrDefaultAsync(m => m.EmployeeID == id);
             if (employee == null)
             {
                 return NotFound();
@@ -80,7 +80,7 @@ namespace ExpertInvoAPI.Controllers
 
         private bool EmployeeExists(int id)
         {
-            return _context.EmployeeModel.Any(e => e.EmployeeID == id);
+            return _context.EmployeeTb.Any(e => e.EmployeeID == id);
         }
 
         // DELETE: api/Employee/5
@@ -91,12 +91,12 @@ namespace ExpertInvoAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var employee = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.EmployeeID == id);
+            var employee = await _context.EmployeeTb.SingleOrDefaultAsync(m => m.EmployeeID == id);
             if (employee == null)
             {
                 return NotFound();
             }
-            _context.EmployeeModel.Remove(employee);
+            _context.EmployeeTb.Remove(employee);
             await _context.SaveChangesAsync();
             return Ok(employee);
         }
@@ -109,7 +109,7 @@ namespace ExpertInvoAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            _context.EmployeeModel.Add(employee);
+            _context.EmployeeTb.Add(employee);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetEmployee", new { id = employee.EmployeeID }, employee);
         }

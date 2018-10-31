@@ -29,14 +29,21 @@ namespace ExpertInvoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+            //services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+            //    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //Sometimes "DefaultConnection" doesn't correctly reference
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("Server=expterinvoserver.database.windows.net;Database=ExpertInvoDatabase; Persist Security Info=False;User ID=ExpertInvo;Password=ExpertInv0;TrustServerCertificate=False;")));
             services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+                    options.UseSqlServer(Configuration.GetConnectionString("SecondaryConnection")));
+            // we'll have to remove this connection string later.
+            services.AddMvc();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -59,8 +66,8 @@ namespace ExpertInvoAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
+            //app.UseHttpsRedirection();
+            //app.UseAuthentication();
             app.UseCors("CorsPolicy");
             app.UseMvc();
         }

@@ -17,7 +17,7 @@ namespace ExpertInvoAPI.Data
         }
         public ApplicationDbContext() { }
 
-        public DbSet<EmployeeModel> EmployeeModel { get; set; }
-        public DbSet<PlcModel> PlcModel { get; set; }
+        public DbSet<EmployeeModel> EmployeeTb { get; set; }
+        public DbSet<PlcModel> Plcdatatest { get; set; }
     }
 }
